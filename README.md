@@ -1,2 +1,2 @@
 # Udacity
-[Java Programming Basics](https://www.udacity.com/course/java-programming-basics--ud282)
+[Java Programming Basics](https://www.udacity.com/course/java-programming-basics--ud282) ☑
