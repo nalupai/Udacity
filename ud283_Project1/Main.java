@@ -20,7 +20,7 @@ class Main {
         }
 
         Random random = new Random();
-        int randomTitleIndex = random.nextInt(availableTitles) + 1;
+        int randomTitleIndex = random.nextInt(availableTitles);
         System.out.println(randomTitleIndex);
 
         scannerFile.close();
