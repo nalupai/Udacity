@@ -21,13 +21,10 @@ class Main {
         int randomTitleIndex = random.nextInt(availableTitles);
 
         String title = titles[randomTitleIndex];
-        System.out.println(title);
-
         char[] answer = new char[title.length()];
 
         for (int i = 0; i < title.length(); i++) {
             answer[i] = title.charAt(i);
-            System.out.println(answer[i]);
         }
 
         char[] game = new char[title.length()];
@@ -38,9 +35,62 @@ class Main {
             } else {
                 game[i] = answer[i];
             }
-            System.out.println(game[i]);
         }
 
+        int availableChars = title.length();
+        int mistakes = 0;
+        boolean isMistake = true;
+
+        Scanner scanner = new Scanner(System.in);
+        char letter;
+
+        while (mistakes <= 10) {
+
+            if (availableChars == 0) {
+                System.out.print("You have guessed '");
+                for (int i = 0; i < answer.length; i++) {
+                    System.out.print(answer[i]);
+                }
+                System.out.println("' correctly");
+                break;
+            }
+
+            if (mistakes == 10) {
+                System.out.println("You have guesses (" + mistakes + ") wrong letters");
+                System.out.print("You didn't guessed '");
+                for (int i = 0; i < answer.length; i++) {
+                    System.out.print(answer[i]);
+                }
+                System.out.println("' correctly");
+                break;
+            }
+
+            System.out.print("You are guessing: ");
+            for (int i = 0; i < game.length; i++) {
+                System.out.print(game[i]);
+            }
+            System.out.println();
+
+            System.out.println("You have guesses (" + mistakes + ") wrong letters");
+
+            System.out.println("Guess a letter: ");
+            letter = scanner.next().charAt(0);
+            for (int i = 0; i < answer.length; i++) {
+                if (("" + answer[i]).equalsIgnoreCase("" + letter)) {
+                    game[i] = answer[i];
+                    availableChars--;
+                    isMistake = false;
+                }
+            }
+
+            if (isMistake) {
+                mistakes++;
+            }
+
+            isMistake = true;
+        }
+
+        scanner.close();
         scannerFile.close();
     }
 }
