@@ -37,12 +37,22 @@ class Main {
             }
         }
 
-        int availableChars = title.length();
+        int availableChars = 0;
+        String uniqueTitleLetters = "";
+        for (int i = 0; i < title.length(); i++) {
+            if (!uniqueTitleLetters.contains("" + title.charAt(i))) {
+                uniqueTitleLetters += title.charAt(i);
+                availableChars++;
+            }
+        }
+
         int mistakes = 0;
         boolean isMistake = true;
 
         Scanner scanner = new Scanner(System.in);
         char letter;
+
+        String usedCorrectLetters = "";
 
         while (mistakes <= 10) {
 
@@ -78,9 +88,13 @@ class Main {
             for (int i = 0; i < answer.length; i++) {
                 if (("" + answer[i]).equalsIgnoreCase("" + letter)) {
                     game[i] = answer[i];
-                    availableChars--;
                     isMistake = false;
                 }
+            }
+
+            if (!usedCorrectLetters.contains("" + letter) && isMistake == false) {
+                usedCorrectLetters += letter;
+                availableChars--;
             }
 
             if (isMistake) {
