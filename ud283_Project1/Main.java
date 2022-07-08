@@ -37,7 +37,7 @@ class Main {
             }
         }
 
-        int availableChars = 0;
+        int availableChars = title.contains(" ") ? -1 : 0;
         String uniqueTitleLetters = "";
         for (int i = 0; i < title.length(); i++) {
             if (!uniqueTitleLetters.contains("" + title.charAt(i))) {
@@ -45,14 +45,15 @@ class Main {
                 availableChars++;
             }
         }
-
+        
         int mistakes = 0;
         boolean isMistake = true;
 
         Scanner scanner = new Scanner(System.in);
         char letter;
 
-        String usedCorrectLetters = "";
+        String usedCorrectLetters = uniqueTitleLetters.contains(" ") ? " " : "";
+        String wrongLettersLog = "";
 
         while (mistakes <= 10) {
 
@@ -81,7 +82,16 @@ class Main {
             }
             System.out.println();
 
-            System.out.println("You have guesses (" + mistakes + ") wrong letters");
+            switch (mistakes) {
+                case 0:
+                    System.out.println("You have guesses (" + mistakes + ") wrong letters");
+                    break;
+                case 1:
+                    System.out.println("You have guesses (" + mistakes + ") wrong letter: " + wrongLettersLog.trim());
+                    break;
+                default:
+                    System.out.println("You have guesses (" + mistakes + ") wrong letters: " + wrongLettersLog.trim());
+            }
 
             System.out.println("Guess a letter: ");
             letter = scanner.next().charAt(0);
@@ -92,12 +102,13 @@ class Main {
                 }
             }
 
-            if (!usedCorrectLetters.contains("" + letter) && isMistake == false) {
+            if (!isMistake && !usedCorrectLetters.contains("" + letter)) {
                 usedCorrectLetters += letter;
                 availableChars--;
             }
 
-            if (isMistake) {
+            if (isMistake && !wrongLettersLog.contains("" + letter)) {
+                wrongLettersLog += letter + " ";
                 mistakes++;
             }
 
