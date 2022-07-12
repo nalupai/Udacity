@@ -6,45 +6,12 @@ import java.util.Random;
 class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
-        int maxTitles = 25;
-        int availableTitles = 0;
-        String[] titles = new String[maxTitles];
-        File file = new File("titles.txt");
-        Scanner scannerFile = new Scanner(file);
+        String title = randomTitle();
+        char[] answer = prepareAnswer(title);
+        char[] game = prepareGame(answer, title);
+        String titleLetters = chooseTitleLetters(title);
 
-        while (scannerFile.hasNextLine() && availableTitles < maxTitles) {
-            titles[availableTitles] = scannerFile.nextLine();
-            availableTitles++;
-        }
-
-        Random random = new Random();
-        int randomTitleIndex = random.nextInt(availableTitles);
-
-        String title = titles[randomTitleIndex];
-        char[] answer = new char[title.length()];
-
-        for (int i = 0; i < title.length(); i++) {
-            answer[i] = title.charAt(i);
-        }
-
-        char[] game = new char[title.length()];
-
-        for (int i = 0; i < title.length(); i++) {
-            if (answer[i] != ' ') {
-                game[i] = '_';
-            } else {
-                game[i] = answer[i];
-            }
-        }
-
-        int availableChars = title.contains(" ") ? -1 : 0;
-        String uniqueTitleLetters = "";
-        for (int i = 0; i < title.length(); i++) {
-            if (!uniqueTitleLetters.contains("" + title.charAt(i))) {
-                uniqueTitleLetters += title.charAt(i);
-                availableChars++;
-            }
-        }
+        int availableChars = titleLetters.length();
         
         int mistakes = 0;
         boolean isMistake = true;
@@ -52,7 +19,7 @@ class Main {
         Scanner scanner = new Scanner(System.in);
         char letter;
 
-        String usedCorrectLetters = uniqueTitleLetters.contains(" ") ? " " : "";
+        String usedCorrectLetters = "";
         String wrongLettersLog = "";
 
         while (mistakes <= 10) {
@@ -116,6 +83,67 @@ class Main {
         }
 
         scanner.close();
+    }
+
+    public static String chooseTitleLetters(String title) {
+
+        String letters = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+        String result = "";
+
+        for (int i = 0; i < title.length(); i++) {
+            if (!result.contains("" + title.charAt(i)) && letters.contains("" + title.charAt(i))) {
+                result += title.charAt(i);
+            }
+        }
+
+        return result;
+
+    }
+
+    public static char[] prepareGame(char[] answer, String title) {
+
+        String letters = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+        char[] game = new char[title.length()];
+
+        for (int i = 0; i < title.length(); i++) {
+            if (!letters.contains("" + answer[i])) {
+                game[i] = answer[i];
+            } else {
+                game[i] = '_';
+            }
+        }
+
+        return game;
+    }
+
+    public static char[] prepareAnswer(String title) {
+
+        char[] result = new char[title.length()];
+
+        for (int i = 0; i < title.length(); i++) {
+            result[i] = title.charAt(i);
+        }
+
+        return result;
+    }
+
+    public static String randomTitle() throws FileNotFoundException {
+
+        int maxTitles = 25;
+        int availableTitles = 0;
+        String[] titles = new String[maxTitles];
+        File file = new File("titles.txt");
+        Scanner scannerFile = new Scanner(file);
+
+        while (scannerFile.hasNextLine() && availableTitles < maxTitles) {
+            titles[availableTitles] = scannerFile.nextLine();
+            availableTitles++;
+        }
+
+        Random random = new Random();
+        int randomTitleIndex = random.nextInt(availableTitles);
         scannerFile.close();
+
+        return titles[randomTitleIndex];
     }
 }
