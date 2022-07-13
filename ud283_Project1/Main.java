@@ -20,7 +20,8 @@ class Main {
         char letter;
 
         String usedCorrectLetters = "";
-        String wrongLettersLog = "";
+        String wrongLettersLogShown = "";
+        String wrongLettersLogHidden = "";
 
         while (mistakes <= 10) {
 
@@ -54,10 +55,10 @@ class Main {
                     System.out.println("You have guesses (" + mistakes + ") wrong letters");
                     break;
                 case 1:
-                    System.out.println("You have guesses (" + mistakes + ") wrong letter: " + wrongLettersLog.trim());
+                    System.out.println("You have guesses (" + mistakes + ") wrong letter: " + wrongLettersLogShown.trim());
                     break;
                 default:
-                    System.out.println("You have guesses (" + mistakes + ") wrong letters: " + wrongLettersLog.trim());
+                    System.out.println("You have guesses (" + mistakes + ") wrong letters: " + wrongLettersLogShown.trim());
             }
 
             System.out.println("Guess a letter: ");
@@ -70,12 +71,13 @@ class Main {
             }
 
             if (!isMistake && !usedCorrectLetters.contains("" + letter)) {
-                usedCorrectLetters += letter;
+                usedCorrectLetters += ("" + letter).toLowerCase() + ("" + letter).toUpperCase();
                 availableChars--;
             }
 
-            if (isMistake && !wrongLettersLog.contains("" + letter)) {
-                wrongLettersLog += letter + " ";
+            if (isMistake && !wrongLettersLogHidden.contains("" + letter)) {
+                wrongLettersLogShown += letter + " ";
+                wrongLettersLogHidden += ("" + letter).toLowerCase() + ("" + letter).toUpperCase();
                 mistakes++;
             }
 
@@ -87,7 +89,8 @@ class Main {
 
     public static String chooseTitleLetters(String title) {
 
-        String letters = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+        String letters = "abcdefghijklmnopqrstuvwxyz";
+        title = title.toLowerCase();
         String result = "";
 
         for (int i = 0; i < title.length(); i++) {
