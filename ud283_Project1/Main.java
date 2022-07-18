@@ -7,6 +7,7 @@ class Main {
 
     final static int MAX_TITLES = 25;
     final static int MAX_MISTAKES = 10;
+    
     public static void main(String[] args) throws FileNotFoundException {
 
         String title = randomTitle();
