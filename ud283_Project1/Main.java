@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 
 class Main {
+
+    final static int MAX_TITLES = 25;
+    final static int MAX_MISTAKES = 10;
     public static void main(String[] args) throws FileNotFoundException {
 
         String title = randomTitle();
@@ -23,7 +26,7 @@ class Main {
         String wrongLettersLogShown = "";
         String wrongLettersLogHidden = "";
 
-        while (mistakes <= 10) {
+        while (mistakes <= MAX_MISTAKES) {
 
             if (availableChars == 0) {
                 System.out.print("You have guessed '");
@@ -34,7 +37,7 @@ class Main {
                 break;
             }
 
-            if (mistakes == 10) {
+            if (mistakes == MAX_MISTAKES) {
                 System.out.println("You have guesses (" + mistakes + ") wrong letters");
                 System.out.print("You didn't guessed '");
                 for (int i = 0; i < answer.length; i++) {
@@ -100,7 +103,6 @@ class Main {
         }
 
         return result;
-
     }
 
     public static char[] prepareGame(char[] answer, String title) {
@@ -132,13 +134,12 @@ class Main {
 
     public static String randomTitle() throws FileNotFoundException {
 
-        int maxTitles = 25;
         int availableTitles = 0;
-        String[] titles = new String[maxTitles];
+        String[] titles = new String[MAX_TITLES];
         File file = new File("titles.txt");
         Scanner scannerFile = new Scanner(file);
 
-        while (scannerFile.hasNextLine() && availableTitles < maxTitles) {
+        while (scannerFile.hasNextLine() && availableTitles < MAX_TITLES) {
             titles[availableTitles] = scannerFile.nextLine();
             availableTitles++;
         }
