@@ -68,7 +68,10 @@ class Main {
 
             System.out.println("Guess a letter: ");
             letter = scanner.next().charAt(0);
-            if (!isLetter(letter)) continue;
+            if (!isLetter(letter)) {
+                System.out.println("Oops!"); 
+                continue;
+            }
 
             for (int i = 0; i < answer.length; i++) {
                 if (("" + answer[i]).equalsIgnoreCase("" + letter)) {
@@ -96,7 +99,6 @@ class Main {
 
     public static boolean isLetter(char letter) {
 
-        System.out.println("Oops!");
         return ALL_LETTERS.contains("" + letter);
     }
 
