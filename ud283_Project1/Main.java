@@ -5,6 +5,7 @@ import java.util.Random;
 
 class Main {
 
+    final static String ALL_LETTERS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
     final static int MAX_TITLES = 25;
     final static int MAX_MISTAKES = 10;
     
@@ -67,6 +68,8 @@ class Main {
 
             System.out.println("Guess a letter: ");
             letter = scanner.next().charAt(0);
+            if (!isLetter(letter)) continue;
+
             for (int i = 0; i < answer.length; i++) {
                 if (("" + answer[i]).equalsIgnoreCase("" + letter)) {
                     game[i] = answer[i];
@@ -91,6 +94,12 @@ class Main {
         scanner.close();
     }
 
+    public static boolean isLetter(char letter) {
+
+        System.out.println("Oops!");
+        return ALL_LETTERS.contains("" + letter);
+    }
+
     public static String chooseTitleLetters(String title) {
 
         String letters = "abcdefghijklmnopqrstuvwxyz";
@@ -108,11 +117,10 @@ class Main {
 
     public static char[] prepareGame(char[] answer, String title) {
 
-        String letters = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
         char[] game = new char[title.length()];
 
         for (int i = 0; i < title.length(); i++) {
-            if (!letters.contains("" + answer[i])) {
+            if (!ALL_LETTERS.contains("" + answer[i])) {
                 game[i] = answer[i];
             } else {
                 game[i] = '_';
